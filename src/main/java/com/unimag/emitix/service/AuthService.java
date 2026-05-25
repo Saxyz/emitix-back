@@ -2,6 +2,7 @@ package com.unimag.emitix.service;
 
 import com.unimag.emitix.dto.LoginRequest;
 import com.unimag.emitix.dto.LoginResponse;
+import com.unimag.emitix.dto.MeResponse;
 import com.unimag.emitix.dto.RegisterRequest;
 import com.unimag.emitix.entity.Company;
 import com.unimag.emitix.entity.User;
@@ -50,6 +51,22 @@ public class AuthService {
         }
         tokenBlacklistService.blacklist(token);
         log.info("Token invalidated successfully (logout)");
+    }
+
+    public MeResponse me(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
+        java.util.UUID companyId = user.getCompany() != null ? user.getCompany().getId() : null;
+        return new MeResponse(
+                user.getId(),
+                companyId,
+                user.getUsername(),
+                user.getEmail(),
+                user.getFullName(),
+                user.getPhone(),
+                user.getRole().name(),
+                user.isActive()
+        );
     }
 
     @org.springframework.transaction.annotation.Transactional
