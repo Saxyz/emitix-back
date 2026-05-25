@@ -6,9 +6,12 @@ import java.util.UUID;
 
 public record ResolutionResponse(
         UUID id,
+        UUID companyId,
         String prefix,
-        long fromNumber,
-        long toNumber,
+        String resolutionNumber,
+        LocalDate resolutionDate,
+        long rangeFrom,
+        long rangeTo,
         long currentNumber,
         LocalDate validFrom,
         LocalDate validUntil,

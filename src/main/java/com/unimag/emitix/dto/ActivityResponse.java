@@ -6,11 +6,14 @@ import java.util.UUID;
 public record ActivityResponse(
         UUID id,
         String username,
-        String userFullName,
+        String actorType,
         String action,
-        String entityType,
+        String entity,
         String entityId,
-        String details,
+        String entityRef,
+        String description,
+        String result,
+        String errorDetail,
         String ipAddress,
         LocalDateTime createdAt
 ) {}

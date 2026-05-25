@@ -8,5 +8,9 @@ public record CompanyResponse(
         String legalName,
         String address,
         String city,
+        String department,
+        String country,
+        String phone,
+        String email,
         String logoUrl
 ) {}

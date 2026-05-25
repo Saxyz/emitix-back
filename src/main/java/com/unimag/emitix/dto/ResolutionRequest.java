@@ -12,13 +12,20 @@ public record ResolutionRequest(
         @Size(max = 10)
         String prefix,
 
-        @NotNull(message = "El número inicial es requerido")
-        @Min(value = 1, message = "El número inicial debe ser mayor a 0")
-        Long fromNumber,
+        // Número oficial de la resolución emitida por DIAN
+        @Size(max = 50)
+        String resolutionNumber,
 
-        @NotNull(message = "El número final es requerido")
+        // Fecha en que DIAN emitió la resolución
+        LocalDate resolutionDate,
+
+        @NotNull(message = "El número inicial del rango es requerido")
+        @Min(value = 1, message = "El número inicial debe ser mayor a 0")
+        Long rangeFrom,
+
+        @NotNull(message = "El número final del rango es requerido")
         @Min(value = 1, message = "El número final debe ser mayor a 0")
-        Long toNumber,
+        Long rangeTo,
 
         @NotNull(message = "La fecha de inicio de vigencia es requerida")
         LocalDate validFrom,

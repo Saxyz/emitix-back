@@ -11,11 +11,23 @@ public record CompanyRequest(
         @Size(max = 255, message = "El nombre no puede superar 255 caracteres")
         String legalName,
 
-        @Size(max = 255, message = "La dirección no puede superar 255 caracteres")
+        @Size(max = 255)
         String address,
 
-        @Size(max = 100, message = "La ciudad no puede superar 100 caracteres")
+        @Size(max = 100)
         String city,
+
+        @Size(max = 100)
+        String department,
+
+        @Size(max = 2)
+        String country,
+
+        @Size(max = 30)
+        String phone,
+
+        @Email(message = "Email corporativo inválido")
+        String email,
 
         String logoUrl
 ) {}

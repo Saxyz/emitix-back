@@ -6,12 +6,16 @@ import java.util.UUID;
 
 public record ProductResponse(
         UUID id,
-        String code,
-        String name,
+        UUID companyId,
+        String internalCode,
         String description,
-        BigDecimal unitPrice,
-        BigDecimal taxRate,
+        String unspscCode,
         String unit,
+        BigDecimal unitPrice,
+        String currency,
+        BigDecimal taxRate,
+        boolean isIvaExcluded,
+        boolean isService,
         boolean isActive,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

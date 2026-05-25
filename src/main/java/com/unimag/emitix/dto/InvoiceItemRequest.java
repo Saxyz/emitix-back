@@ -3,6 +3,7 @@ package com.unimag.emitix.dto;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record InvoiceItemRequest(
         @NotBlank(message = "La descripción del ítem es requerida")
@@ -17,6 +18,21 @@ public record InvoiceItemRequest(
         BigDecimal unitPrice,
 
         @DecimalMin(value = "0.00", message = "La tasa de impuesto no puede ser negativa")
-        @DecimalMax(value = "1.00", message = "La tasa de impuesto no puede superar el 100%")
-        BigDecimal taxRate
+        @DecimalMax(value = "100.0", message = "La tasa de impuesto no puede superar 100%")
+        BigDecimal taxRate,
+
+        UUID productId,
+
+        @Size(max = 10)
+        String unit,
+
+        @DecimalMin(value = "0.00", message = "El descuento no puede ser negativo")
+        @DecimalMax(value = "100.0", message = "El descuento no puede superar 100%")
+        BigDecimal discountPct,
+
+        @Size(max = 8)
+        String unspscCode,
+
+        @Size(max = 10)
+        String taxType
 ) {}
