@@ -1,4 +1,4 @@
-CREATE TYPE user_role AS ENUM ('admin', 'accountant', 'viewer');
+CREATE TYPE user_role AS ENUM ('ADMIN', 'ACCOUNTANT', 'VIEWER');
 
 CREATE TABLE users
 (
@@ -8,7 +8,7 @@ CREATE TABLE users
     email      VARCHAR(100) NOT NULL,
     full_name  VARCHAR(150) NOT NULL,
     phone      VARCHAR(20),
-    role       user_role    NOT NULL DEFAULT 'viewer',
+    role       user_role    NOT NULL DEFAULT 'ACCOUNTANT',
     is_active  BOOLEAN      NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP    NOT NULL DEFAULT NOW(),

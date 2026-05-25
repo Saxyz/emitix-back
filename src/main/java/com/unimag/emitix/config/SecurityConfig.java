@@ -4,6 +4,7 @@ import com.unimag.emitix.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -37,11 +38,11 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/company").hasAnyRole("ADMIN", "OPERADOR")
+                .requestMatchers(HttpMethod.GET, "/api/company").hasAnyRole("ADMIN", "ACCOUNTANT", "VIEWER")
                 .requestMatchers(HttpMethod.PUT, "/api/company").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/invoices/**").hasAnyRole("ADMIN", "OPERADOR")
-                .requestMatchers(HttpMethod.POST, "/api/invoices").hasAnyRole("ADMIN", "OPERADOR")
-                .requestMatchers(HttpMethod.POST, "/api/invoices/*/confirm").hasAnyRole("ADMIN", "OPERADOR")
+                .requestMatchers(HttpMethod.GET, "/api/invoices/**").hasAnyRole("ADMIN", "ACCOUNTANT", "VIEWER")
+                .requestMatchers(HttpMethod.POST, "/api/invoices").hasAnyRole("ADMIN", "ACCOUNTANT", "VIEWER")
+                .requestMatchers(HttpMethod.POST, "/api/invoices/*/confirm").hasAnyRole("ADMIN", "ACCOUNTANT", "VIEWER")
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

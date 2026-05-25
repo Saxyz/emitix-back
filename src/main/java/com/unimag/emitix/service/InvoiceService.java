@@ -48,8 +48,8 @@ public class InvoiceService {
 
     @Transactional
     public InvoiceResponse create(CreateInvoiceRequest request, String createdBy) {
-        Buyer buyer = buyerRepository.findById(request.BuyerId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente", "id", request.BuyerId()));
+        Buyer buyer = buyerRepository.findById(request.buyerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", "id", request.buyerId()));
 
         Company company = companyRepository.findFirstByOrderByCreatedAtAsc()
                 .orElseThrow(() -> new ResourceNotFoundException("Empresa emisora", "registro", "único"));

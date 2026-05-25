@@ -1,6 +1,5 @@
 package com.unimag.emitix.security;
 
-import com.unimag.emitix.exception.ResourceNotFoundException;
 import com.unimag.emitix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

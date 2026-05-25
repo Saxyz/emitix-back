@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record CreateInvoiceRequest(
         @NotNull(message = "El ID del cliente es requerido")
-        UUID BuyerId,
+        UUID buyerId,
 
         String notes,
 

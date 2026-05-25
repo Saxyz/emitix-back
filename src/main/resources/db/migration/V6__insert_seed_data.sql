@@ -1,23 +1,23 @@
 -- Seed admin user: password = admin123 (BCrypt)
 INSERT INTO users (id, username, password, email, full_name, phone, role, is_active)
 VALUES (gen_random_uuid(),
-        'admin',
+        'ADMIN',
         '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
         'admin@emitix.com',
         'Administrador del Sistema',
         '+57 300 000 0000',
-        'admin',
+        'ADMIN',
         TRUE);
 
 -- Seed operador user: password = operador123 (BCrypt)
 INSERT INTO users (id, username, password, email, full_name, phone, role, is_active)
 VALUES (gen_random_uuid(),
-        'operador',
+        'ACCOUNTANT',
         '$2a$10$8K1p/a0dR1xqM8eeXLO1W.g8N2dU5mhHMWuHLV6a8O39EZGRqDhLe',
         'operador@emitix.com',
         'Operador de Facturación',
         '+57 300 111 1111',
-        'accountant',
+        'ACCOUNTANT',
         TRUE);
 
 -- Seed default company

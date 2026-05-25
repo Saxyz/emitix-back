@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -104,5 +105,29 @@ class AuthServiceTest {
 
         // Assert
         verify(tokenBlacklistService).blacklist(null);
+    }
+
+    @Test
+    void shouldMatchPassword() {
+        String rawPassword = "operador123";
+
+        String storedHash = "$2a$10$8K1p/a0dR1xqM8eeXLO1W.g8N2dU5mhHMWuHLV6a8O39EZGRqDhLe";
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        boolean matches = encoder.matches(rawPassword, storedHash);
+
+        System.out.println("Password matches: " + matches);
+
+        assertTrue(matches);
+    }
+
+    @Test
+    void shouldGenerateNewHash() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        String hash = encoder.encode("operador123");
+
+        System.out.println("Generated hash: " + hash);
     }
 }
