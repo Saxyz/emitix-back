@@ -4,6 +4,8 @@ import com.unimag.emitix.dto.LoginRequest;
 import com.unimag.emitix.dto.LoginResponse;
 import com.unimag.emitix.entity.Role;
 import com.unimag.emitix.entity.User;
+import com.unimag.emitix.repository.CompanyRepository;
+import com.unimag.emitix.repository.UserRepository;
 import com.unimag.emitix.security.JwtTokenProvider;
 import com.unimag.emitix.security.TokenBlacklistService;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,12 @@ class AuthServiceTest {
 
     @Mock
     private TokenBlacklistService tokenBlacklistService;
+
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private CompanyRepository companyRepository;
 
     @InjectMocks
     private AuthService authService;
@@ -62,6 +70,7 @@ class AuthServiceTest {
         assertEquals("admin", response.username());
         assertEquals("Administrador", response.fullName());
         assertEquals("ADMIN", response.role());
+        assertNull(response.companyId());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtTokenProvider).generateToken(user);

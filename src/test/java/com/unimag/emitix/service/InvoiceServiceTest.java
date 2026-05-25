@@ -109,8 +109,8 @@ class InvoiceServiceTest {
     void create_Successful() {
         // Arrange
         UUID buyerId = UUID.randomUUID();
-        InvoiceItemRequest itemReq = new InvoiceItemRequest("Item 1", BigDecimal.ONE, BigDecimal.TEN, new BigDecimal("0.19"));
-        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, "Some notes", List.of(itemReq));
+        InvoiceItemRequest itemReq = new InvoiceItemRequest("Item 1", BigDecimal.ONE, BigDecimal.TEN, new BigDecimal("19.00"), null, "UND", null, null, null);
+        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, null, null, null, "Some notes", List.of(itemReq));
 
         Buyer buyer = new Buyer();
         buyer.setId(buyerId);
@@ -148,7 +148,7 @@ class InvoiceServiceTest {
     void create_CustomerNotFound() {
         // Arrange
         UUID buyerId = UUID.randomUUID();
-        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, "Notes", Collections.emptyList());
+        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, null, null, null, "Notes", Collections.emptyList());
 
         when(buyerRepository.findById(buyerId)).thenReturn(Optional.empty());
 
@@ -162,7 +162,7 @@ class InvoiceServiceTest {
     void create_CompanyNotFound() {
         // Arrange
         UUID buyerId = UUID.randomUUID();
-        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, "Notes", Collections.emptyList());
+        CreateInvoiceRequest request = new CreateInvoiceRequest(buyerId, null, null, null, "Notes", Collections.emptyList());
         Buyer buyer = new Buyer();
 
         when(buyerRepository.findById(buyerId)).thenReturn(Optional.of(buyer));

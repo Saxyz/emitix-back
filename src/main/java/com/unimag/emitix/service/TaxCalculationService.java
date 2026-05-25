@@ -13,7 +13,7 @@ import java.math.RoundingMode;
 @Service
 public class TaxCalculationService {
 
-    @Value("${app.invoice.tax-rate:0.19}")
+    @Value("${app.invoice.tax-rate:19.00}")
     private BigDecimal defaultTaxRate;
 
     /**
@@ -27,11 +27,7 @@ public class TaxCalculationService {
         for (InvoiceItem item : invoice.getItems()) {
             calculateItemAmounts(item);
             subtotal = subtotal.add(item.getSubtotal());
-            
-            // Calculate item tax on the fly since InvoiceItem no longer stores taxAmount
-            BigDecimal taxRate = (item.getTaxRate() != null) ? item.getTaxRate() : defaultTaxRate;
-            BigDecimal itemTax = item.getSubtotal().multiply(taxRate).setScale(2, RoundingMode.HALF_UP);
-            totalTax = totalTax.add(itemTax);
+            totalTax = totalTax.add(item.getTaxTotal());
         }
 
         invoice.setSubtotal(subtotal.setScale(2, RoundingMode.HALF_UP));
@@ -43,19 +39,23 @@ public class TaxCalculationService {
     }
 
     /**
-     * Calculates subtotal for a single invoice item.
+     * Calculates subtotal and taxTotal for a single invoice item.
+     * taxRate is stored as a percentage (e.g. 19.00 = 19%), matching DDL DECIMAL(5,2).
      */
     public void calculateItemAmounts(InvoiceItem item) {
         BigDecimal taxRate = (item.getTaxRate() != null) ? item.getTaxRate() : defaultTaxRate;
         BigDecimal qty = item.getQuantity();
         BigDecimal unitPrice = item.getUnitPrice();
-        BigDecimal discountPercent = (item.getDiscount() != null) ? item.getDiscount() : BigDecimal.ZERO;
+        BigDecimal discountPct = (item.getDiscountPct() != null) ? item.getDiscountPct() : BigDecimal.ZERO;
 
         BigDecimal baseAmount = qty.multiply(unitPrice);
-        BigDecimal discountAmount = baseAmount.multiply(discountPercent.divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP));
+        BigDecimal discountAmount = baseAmount.multiply(discountPct.divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP));
         BigDecimal itemSubtotal = baseAmount.subtract(discountAmount).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal itemTax = itemSubtotal.multiply(taxRate.divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP))
+                .setScale(2, RoundingMode.HALF_UP);
 
         item.setTaxRate(taxRate);
         item.setSubtotal(itemSubtotal);
+        item.setTaxTotal(itemTax);
     }
 }

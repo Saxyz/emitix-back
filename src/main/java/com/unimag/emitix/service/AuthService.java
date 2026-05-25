@@ -3,8 +3,10 @@ package com.unimag.emitix.service;
 import com.unimag.emitix.dto.LoginRequest;
 import com.unimag.emitix.dto.LoginResponse;
 import com.unimag.emitix.dto.RegisterRequest;
+import com.unimag.emitix.entity.Company;
 import com.unimag.emitix.entity.Role;
 import com.unimag.emitix.entity.User;
+import com.unimag.emitix.repository.CompanyRepository;
 import com.unimag.emitix.repository.UserRepository;
 import com.unimag.emitix.security.JwtTokenProvider;
 import com.unimag.emitix.security.TokenBlacklistService;
@@ -25,6 +27,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenBlacklistService tokenBlacklistService;
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
 
     public LoginResponse login(LoginRequest request) {
@@ -37,7 +40,8 @@ public class AuthService {
 
         log.info("User '{}' logged in successfully", user.getUsername());
 
-        return new LoginResponse(token, user.getUsername(), user.getFullName(), user.getRole().name());
+        java.util.UUID companyId = user.getCompany() != null ? user.getCompany().getId() : null;
+        return new LoginResponse(token, user.getUsername(), user.getFullName(), user.getRole().name(), companyId);
     }
 
     public void logout(String token) {
@@ -48,6 +52,7 @@ public class AuthService {
         log.info("Token invalidated successfully (logout)");
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public LoginResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("El username '" + request.username() + "' ya está en uso");
@@ -56,20 +61,28 @@ public class AuthService {
             throw new IllegalArgumentException("El email '" + request.email() + "' ya está registrado");
         }
 
+        // Crear empresa y ADMIN en una sola transacción (onboarding multi-tenant)
+        Company company = Company.builder()
+                .nit(request.companyNit())
+                .legalName(request.companyLegalName())
+                .build();
+        company = companyRepository.save(company);
+
         User user = User.builder()
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
                 .email(request.email())
                 .fullName(request.fullName())
                 .phone(request.phone())
-                .role(Role.ACCOUNTANT)   // rol por defecto al registrarse
+                .role(Role.ADMIN)
+                .company(company)
                 .isActive(true)
                 .build();
 
         userRepository.save(user);
-        log.info("User '{}' registered successfully", user.getUsername());
+        log.info("User '{}' registered successfully with company '{}'", user.getUsername(), company.getNit());
 
         String token = jwtTokenProvider.generateToken(user);
-        return new LoginResponse(token, user.getUsername(), user.getFullName(), user.getRole().name());
+        return new LoginResponse(token, user.getUsername(), user.getFullName(), user.getRole().name(), company.getId());
     }
 }

@@ -96,7 +96,7 @@ public class InvoicePdfService {
         BuyerCell.setBackgroundColor(HEADER_BG);
         BuyerCell.addElement(new Phrase("RECEPTOR", labelFont));
         BuyerCell.addElement(new Phrase(invoice.getBuyer().getFullName(), new Font(Font.HELVETICA, 10, Font.BOLD)));
-        BuyerCell.addElement(new Phrase(invoice.getBuyer().getDocumentType() + ": " + invoice.getBuyer().getNit(), valueFont));
+        BuyerCell.addElement(new Phrase(invoice.getBuyer().getDocumentType() + ": " + invoice.getBuyer().getDocumentNumber(), valueFont));
         if (invoice.getBuyer().getEmail() != null)
             BuyerCell.addElement(new Phrase(invoice.getBuyer().getEmail(), valueFont));
         if (invoice.getBuyer().getAddress() != null)

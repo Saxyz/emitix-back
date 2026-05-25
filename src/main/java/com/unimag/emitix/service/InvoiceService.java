@@ -70,16 +70,18 @@ public class InvoiceService {
             BigDecimal qty = itemReq.quantity();
             BigDecimal price = itemReq.unitPrice();
             BigDecimal subtotal = qty.multiply(price).setScale(2, RoundingMode.HALF_UP);
-            BigDecimal taxRate = itemReq.taxRate() != null ? itemReq.taxRate() : BigDecimal.valueOf(0.19);
+            // taxRate stored as percentage (19.00 = 19%), matching DDL DECIMAL(5,2)
+            BigDecimal taxRate = itemReq.taxRate() != null ? itemReq.taxRate() : BigDecimal.valueOf(19.00);
 
             return InvoiceItem.builder()
                     .description(itemReq.description())
                     .quantity(qty)
                     .unitPrice(price)
                     .taxRate(taxRate)
-                    .unit("UN") // default unit
-                    .discount(BigDecimal.ZERO)
-                    .taxType("01") // standard VAT (IVA)
+                    .unit(itemReq.unit() != null ? itemReq.unit() : "UND")
+                    .discountPct(itemReq.discountPct() != null ? itemReq.discountPct() : BigDecimal.ZERO)
+                    .taxType(itemReq.taxType() != null ? itemReq.taxType() : "IVA")
+                    .unspscCode(itemReq.unspscCode())
                     .subtotal(subtotal)
                     .build();
         }).toList();
