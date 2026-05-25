@@ -93,10 +93,12 @@ class InvoiceControllerTest {
         // 3. Save Buyer
         Buyer customer = Buyer.builder()
                 .documentType("CC")
-                .nit("1012345678")
+                .documentNumber("1012345678")
+                .organizationType("NATURAL")
                 .fullName("Juan Perez")
                 .email("juan@gmail.com")
                 .address("Calle Falsa 123")
+                .company(testCompany)
                 .build();
         testCustomer = buyerRepository.save(customer);
     }
@@ -117,8 +119,8 @@ class InvoiceControllerTest {
 
     @Test
     void createInvoice_Successful() throws Exception {
-        InvoiceItemRequest itemRequest = new InvoiceItemRequest("Celular Samsung", BigDecimal.ONE, new BigDecimal("1500000.00"), new BigDecimal("0.19"));
-        CreateInvoiceRequest request = new CreateInvoiceRequest(testCustomer.getId(), "Test notes", List.of(itemRequest));
+        InvoiceItemRequest itemRequest = new InvoiceItemRequest("Celular Samsung", BigDecimal.ONE, new BigDecimal("1500000.00"), new BigDecimal("19.00"), null, "UND", null, null, null);
+        CreateInvoiceRequest request = new CreateInvoiceRequest(testCustomer.getId(), null, null, null, "Test notes", List.of(itemRequest));
 
         mockMvc.perform(post("/api/invoices")
                         .header("Authorization", jwtToken)
@@ -151,10 +153,10 @@ class InvoiceControllerTest {
                 .description("Laptop Asus")
                 .quantity(BigDecimal.ONE)
                 .unitPrice(new BigDecimal("3000000.00"))
-                .taxRate(new BigDecimal("0.19"))
-                .unit("UN")
-                .discount(BigDecimal.ZERO)
-                .taxType("01")
+                .taxRate(new BigDecimal("19.00"))
+                .unit("UND")
+                .discountPct(BigDecimal.ZERO)
+                .taxType("IVA")
                 .subtotal(new BigDecimal("3000000.00"))
                 .build();
         invoice.addItem(item);
@@ -188,10 +190,10 @@ class InvoiceControllerTest {
                 .description("Laptop Asus")
                 .quantity(BigDecimal.ONE)
                 .unitPrice(new BigDecimal("3000000.00"))
-                .taxRate(new BigDecimal("0.19"))
-                .unit("UN")
-                .discount(BigDecimal.ZERO)
-                .taxType("01")
+                .taxRate(new BigDecimal("19.00"))
+                .unit("UND")
+                .discountPct(BigDecimal.ZERO)
+                .taxType("IVA")
                 .subtotal(new BigDecimal("3000000.00"))
                 .build();
         invoice.addItem(item);

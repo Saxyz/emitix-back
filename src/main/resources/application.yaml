@@ -32,7 +32,7 @@ app:
     expiration-ms: ${JWT_EXPIRATION_MS:3600000}
   invoice:
     prefix: ${INVOICE_PREFIX:FE-}
-    tax-rate: ${INVOICE_TAX_RATE:0.19}
+    tax-rate: ${INVOICE_TAX_RATE:19.00}
 
 server:
   port: ${SERVER_PORT:8080}
