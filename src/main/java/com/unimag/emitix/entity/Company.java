@@ -3,6 +3,9 @@ package com.unimag.emitix.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "companies")
 @Getter
@@ -24,6 +27,34 @@ public class Company extends BaseEntity {
     @Column(name = "city", length = 100)
     private String city;
 
+    @Column(name = "department", length = 100)
+    private String department;
+
+    @Column(name = "country", nullable = false, length = 2)
+    @Builder.Default
+    private String country = "CO";
+
+    @Column(name = "phone", length = 30)
+    private String phone;
+
+    @Column(name = "email", length = 255)
+    private String email;
+
     @Column(name = "logo_url", columnDefinition = "TEXT")
     private String logoUrl;
+
+    // Una empresa tiene muchas resoluciones de numeración DIAN
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Resolution> resolutions = new ArrayList<>();
+
+    // Una empresa tiene muchos productos en su catálogo
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Product> products = new ArrayList<>();
+
+    // Una empresa tiene muchos compradores registrados
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Buyer> buyers = new ArrayList<>();
 }

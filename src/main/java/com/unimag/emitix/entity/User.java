@@ -20,6 +20,10 @@ import java.util.List;
 @Builder
 public class User extends BaseEntity implements UserDetails {
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
 

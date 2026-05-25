@@ -4,7 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "buyers")
+@Table(
+    name = "buyers",
+    uniqueConstraints = @UniqueConstraint(
+        name = "uq_buyer_per_company",
+        columnNames = {"company_id", "document_number"}
+    )
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,18 +18,48 @@ import lombok.*;
 @Builder
 public class Buyer extends BaseEntity {
 
-    @Column(name = "nit", nullable = false, unique = true, length = 20)
-    private String nit;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
+
+    @Column(name = "document_number", nullable = false, length = 20)
+    private String documentNumber;
+
+    @Column(name = "document_type", nullable = false, length = 10)
+    private String documentType;
 
     @Column(name = "full_name", nullable = false, length = 255)
     private String fullName;
 
+    @Column(name = "organization_type", nullable = false, length = 10)
+    private String organizationType;
+
+    @Column(name = "fiscal_regime", length = 10)
+    private String fiscalRegime;
+
     @Column(name = "email", length = 255)
     private String email;
 
-    @Column(name = "address", length = 255)
+    @Column(name = "phone", length = 30)
+    private String phone;
+
+    @Column(name = "address", length = 300)
     private String address;
 
-    @Column(name = "document_type", nullable = false, length = 10)
-    private String documentType;
+    @Column(name = "city", length = 100)
+    private String city;
+
+    @Column(name = "department", length = 100)
+    private String department;
+
+    @Column(name = "postal_code", length = 10)
+    private String postalCode;
+
+    @Column(name = "country", nullable = false, length = 2)
+    @Builder.Default
+    private String country = "CO";
+
+    @Column(name = "is_active", nullable = false)
+    @Builder.Default
+    private boolean isActive = true;
 }
