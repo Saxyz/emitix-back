@@ -1,5 +1,8 @@
 package com.unimag.emitix.entity;
 
+import com.unimag.emitix.entity.enums.DocumentType;
+import com.unimag.emitix.entity.enums.FiscalRegime;
+import com.unimag.emitix.entity.enums.OrganizationType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,17 +28,20 @@ public class Buyer extends BaseEntity {
     @Column(name = "document_number", nullable = false, length = 20)
     private String documentNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "document_type", nullable = false, length = 10)
-    private String documentType;
+    private DocumentType documentType;
 
     @Column(name = "full_name", nullable = false, length = 255)
     private String fullName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "organization_type", nullable = false, length = 10)
-    private String organizationType;
+    private OrganizationType organizationType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "fiscal_regime", length = 10)
-    private String fiscalRegime;
+    private FiscalRegime fiscalRegime;
 
     @Column(name = "email", length = 255)
     private String email;

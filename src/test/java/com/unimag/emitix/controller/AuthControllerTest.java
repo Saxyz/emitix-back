@@ -2,8 +2,8 @@ package com.unimag.emitix.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unimag.emitix.dto.LoginRequest;
-import com.unimag.emitix.entity.Role;
 import com.unimag.emitix.entity.User;
+import com.unimag.emitix.entity.enums.Role;
 import com.unimag.emitix.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

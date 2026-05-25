@@ -1,5 +1,6 @@
 package com.unimag.emitix.entity;
 
+import com.unimag.emitix.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -53,22 +54,14 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    public boolean isAccountNonLocked() { return true; }
 
     @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    public boolean isCredentialsNonExpired() { return true; }
 
     @Override
-    public boolean isEnabled() {
-        return this.isActive;
-    }
+    public boolean isEnabled() { return this.isActive; }
 }

@@ -3,7 +3,7 @@ package com.unimag.emitix.service;
 import com.unimag.emitix.dto.InvoiceResponse;
 import com.unimag.emitix.entity.Invoice;
 import com.unimag.emitix.entity.InvoiceItem;
-import com.unimag.emitix.entity.InvoiceStatus;
+import com.unimag.emitix.entity.enums.InvoiceStatus;
 import com.unimag.emitix.exception.BusinessException;
 import com.unimag.emitix.exception.InvalidInvoiceStateException;
 import com.unimag.emitix.mapper.InvoiceMapper;
@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

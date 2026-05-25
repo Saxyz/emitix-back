@@ -5,6 +5,7 @@ import com.unimag.emitix.dto.InvoiceItemRequest;
 import com.unimag.emitix.dto.InvoiceResponse;
 import com.unimag.emitix.dto.PageResponse;
 import com.unimag.emitix.entity.*;
+import com.unimag.emitix.entity.enums.InvoiceStatus;
 import com.unimag.emitix.exception.ResourceNotFoundException;
 import com.unimag.emitix.mapper.InvoiceMapper;
 import com.unimag.emitix.repository.CompanyRepository;

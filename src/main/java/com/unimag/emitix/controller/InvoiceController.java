@@ -4,7 +4,7 @@ import com.unimag.emitix.dto.CreateInvoiceRequest;
 import com.unimag.emitix.dto.InvoiceResponse;
 import com.unimag.emitix.dto.PageResponse;
 import com.unimag.emitix.entity.Invoice;
-import com.unimag.emitix.entity.InvoiceStatus;
+import com.unimag.emitix.entity.enums.InvoiceStatus;
 import com.unimag.emitix.service.InvoicePdfService;
 import com.unimag.emitix.service.InvoiceProcessingService;
 import com.unimag.emitix.service.InvoiceService;

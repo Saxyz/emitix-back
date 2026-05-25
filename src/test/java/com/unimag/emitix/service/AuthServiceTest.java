@@ -2,8 +2,8 @@ package com.unimag.emitix.service;
 
 import com.unimag.emitix.dto.LoginRequest;
 import com.unimag.emitix.dto.LoginResponse;
-import com.unimag.emitix.entity.Role;
 import com.unimag.emitix.entity.User;
+import com.unimag.emitix.entity.enums.Role;
 import com.unimag.emitix.repository.CompanyRepository;
 import com.unimag.emitix.repository.UserRepository;
 import com.unimag.emitix.security.JwtTokenProvider;

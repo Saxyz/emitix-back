@@ -1,5 +1,8 @@
 package com.unimag.emitix.entity;
 
+import com.unimag.emitix.entity.enums.InvoiceStatus;
+import com.unimag.emitix.entity.enums.InvoiceType;
+import com.unimag.emitix.entity.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,22 +23,18 @@ import java.util.List;
 @Builder
 public class Invoice extends BaseEntity {
 
-    // Muchas facturas pertenecen a una empresa emisora
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    // Muchas facturas tienen un comprador (adquiriente)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "buyer_id", nullable = false)
     private Buyer buyer;
 
-    // Muchas facturas se emiten bajo una resolución DIAN (opcional en DRAFT)
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "resolution_id")
     private Resolution resolution;
 
-    // Muchas facturas son creadas por un usuario
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
@@ -72,11 +71,16 @@ public class Invoice extends BaseEntity {
     @Builder.Default
     private BigDecimal total = BigDecimal.ZERO;
 
-    // CUFE: código único de factura electrónica (SHA-384, 96 chars hex)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method", length = 20)
+    private PaymentMethod paymentMethod;
+
+    @Column(name = "due_date")
+    private LocalDate dueDate;
+
     @Column(name = "cufe", length = 96, unique = true)
     private String cufe;
 
-    // URL del código QR obligatorio UBL 2.1
     @Column(name = "qr_url", columnDefinition = "TEXT")
     private String qrUrl;
 
@@ -86,21 +90,12 @@ public class Invoice extends BaseEntity {
     @Column(name = "xml_url", columnDefinition = "TEXT")
     private String xmlUrl;
 
-    // Observaciones libres del emisor
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
-
-    // Medio de pago (efectivo, transferencia, tarjeta, etc.)
-    @Column(name = "payment_method", length = 20)
-    private String paymentMethod;
-
-    @Column(name = "due_date")
-    private LocalDate dueDate;
 
     @Column(name = "issued_at")
     private LocalDateTime issuedAt;
 
-    // Una factura tiene muchos ítems de línea
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<InvoiceItem> items = new ArrayList<>();

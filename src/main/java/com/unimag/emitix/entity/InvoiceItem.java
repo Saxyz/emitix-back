@@ -14,17 +14,14 @@ import java.math.BigDecimal;
 @Builder
 public class InvoiceItem extends BaseEntity {
 
-    // Muchos ítems pertenecen a una factura
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 
-    // Ítem puede estar vinculado al catálogo de productos (opcional)
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    // Número de línea dentro de la factura (UBL 2.1 obligatorio)
     @Column(name = "line_number", nullable = false)
     @Builder.Default
     private int lineNumber = 1;
@@ -55,7 +52,6 @@ public class InvoiceItem extends BaseEntity {
     @Builder.Default
     private BigDecimal taxRate = BigDecimal.ZERO;
 
-    // Valor calculado del impuesto para esta línea
     @Column(name = "tax_total", nullable = false, precision = 18, scale = 2)
     @Builder.Default
     private BigDecimal taxTotal = BigDecimal.ZERO;

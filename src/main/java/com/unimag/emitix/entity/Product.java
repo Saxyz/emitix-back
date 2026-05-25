@@ -50,12 +50,10 @@ public class Product extends BaseEntity {
     @Builder.Default
     private BigDecimal taxRate = new BigDecimal("19.00");
 
-    // TRUE si el producto está excluido de IVA (régimen especial)
     @Column(name = "is_iva_excluded", nullable = false)
     @Builder.Default
     private boolean isIvaExcluded = false;
 
-    // TRUE si es servicio, FALSE si es bien físico
     @Column(name = "is_service", nullable = false)
     @Builder.Default
     private boolean isService = false;
@@ -64,7 +62,6 @@ public class Product extends BaseEntity {
     @Builder.Default
     private boolean isActive = true;
 
-    // Un producto puede aparecer en muchos ítems de factura
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     @Builder.Default
     private List<InvoiceItem> invoiceItems = new ArrayList<>();

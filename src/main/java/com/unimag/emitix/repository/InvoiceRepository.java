@@ -1,8 +1,8 @@
 package com.unimag.emitix.repository;
 
 import com.unimag.emitix.entity.Invoice;
-import com.unimag.emitix.entity.InvoiceStatus;
-import com.unimag.emitix.entity.InvoiceType;
+import com.unimag.emitix.entity.enums.InvoiceStatus;
+import com.unimag.emitix.entity.enums.InvoiceType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

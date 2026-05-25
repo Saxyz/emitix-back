@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unimag.emitix.dto.CreateInvoiceRequest;
 import com.unimag.emitix.dto.InvoiceItemRequest;
 import com.unimag.emitix.entity.*;
+import com.unimag.emitix.entity.enums.DocumentType;
+import com.unimag.emitix.entity.enums.InvoiceStatus;
+import com.unimag.emitix.entity.enums.OrganizationType;
 import com.unimag.emitix.repository.CompanyRepository;
 import com.unimag.emitix.repository.BuyerRepository;
 import com.unimag.emitix.repository.InvoiceRepository;
@@ -76,7 +79,7 @@ class InvoiceControllerTest {
                 .password(passwordEncoder.encode("admin123"))
                 .email("admin@emitix.com")
                 .fullName("Admin Test")
-                .role(Role.ADMIN)
+                .role(com.unimag.emitix.entity.enums.Role.ADMIN)
                 .isActive(true)
                 .build();
         User savedUser = userRepository.save(user);
@@ -92,9 +95,9 @@ class InvoiceControllerTest {
 
         // 3. Save Buyer
         Buyer customer = Buyer.builder()
-                .documentType("CC")
+                .documentType(DocumentType.CC)
                 .documentNumber("1012345678")
-                .organizationType("NATURAL")
+                .organizationType(OrganizationType.NATURAL)
                 .fullName("Juan Perez")
                 .email("juan@gmail.com")
                 .address("Calle Falsa 123")

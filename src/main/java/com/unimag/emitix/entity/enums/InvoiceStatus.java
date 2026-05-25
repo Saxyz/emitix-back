@@ -1,4 +1,4 @@
-package com.unimag.emitix.entity;
+package com.unimag.emitix.entity.enums;
 
 public enum InvoiceStatus {
     DRAFT,

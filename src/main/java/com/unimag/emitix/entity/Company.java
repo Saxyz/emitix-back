@@ -43,17 +43,14 @@ public class Company extends BaseEntity {
     @Column(name = "logo_url", columnDefinition = "TEXT")
     private String logoUrl;
 
-    // Una empresa tiene muchas resoluciones de numeración DIAN
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Resolution> resolutions = new ArrayList<>();
 
-    // Una empresa tiene muchos productos en su catálogo
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Product> products = new ArrayList<>();
 
-    // Una empresa tiene muchos compradores registrados
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Buyer> buyers = new ArrayList<>();
