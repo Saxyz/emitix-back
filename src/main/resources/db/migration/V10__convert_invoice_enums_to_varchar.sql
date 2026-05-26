@@ -24,6 +24,8 @@ ALTER TABLE invoices
         invoice_type IN ('SALE','CREDIT_NOTE','DEBIT_NOTE')
     );
 
--- Drop the now-unused PostgreSQL enum types
+-- Drop defaults that depend on the enum types, then drop the types
+ALTER TABLE invoices ALTER COLUMN status DROP DEFAULT;
+ALTER TABLE invoices ALTER COLUMN invoice_type DROP DEFAULT;
 DROP TYPE IF EXISTS invoice_status;
 DROP TYPE IF EXISTS invoice_type;
