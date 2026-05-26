@@ -114,6 +114,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/activity/**")
                     .hasAnyRole("SUPER_ADMIN", "ADMIN")
 
+                // ── Notifications ────────────────────────────────────────────
+                .requestMatchers(HttpMethod.GET, "/api/notifications")
+                    .hasAnyRole("SUPER_ADMIN", "ADMIN", "ACCOUNTANT", "VIEWER")
+
                 //El resto necesita autenticación
                 .anyRequest().authenticated()
             )

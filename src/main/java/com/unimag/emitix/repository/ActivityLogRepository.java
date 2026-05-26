@@ -10,12 +10,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface ActivityLogRepository extends JpaRepository<ActivityLog, UUID> {
 
-    // entity es un enum → comparación exacta; username/action siguen con LIKE
     @Query("SELECT a FROM ActivityLog a WHERE " +
            "(CAST(:username AS string) IS NULL OR LOWER(a.username) LIKE CAST(:username AS string)) AND " +
            "(CAST(:action AS string) IS NULL OR LOWER(a.action) LIKE CAST(:action AS string)) AND " +
@@ -31,4 +31,13 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, UUID> 
             @Param("to") LocalDateTime to,
             Pageable pageable
     );
+
+    @Query("""
+            SELECT a FROM ActivityLog a
+            WHERE a.username IN (
+                SELECT u.username FROM User u WHERE u.company.id = :companyId
+            )
+            ORDER BY a.createdAt DESC
+            """)
+    List<ActivityLog> findRecentByCompanyId(@Param("companyId") UUID companyId, Pageable pageable);
 }

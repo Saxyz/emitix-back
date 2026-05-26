@@ -2,6 +2,19 @@ spring:
   application:
     name: emitix
 
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/emitix}
     username: ${DB_USERNAME:emitix}
@@ -22,6 +35,9 @@ spring:
         format_sql: true
 
 app:
+  mail:
+    from: ${MAIL_FROM:noreply@emitix.co}
+    enabled: ${MAIL_ENABLED:false}
   jwt:
     secret: ${JWT_SECRET:PPp27xSTfBwOpRn4/AV6gPzQSnQg+Oi80KdWfCcuAHs=}
     expiration-ms: ${JWT_EXPIRATION_MS:3600000}

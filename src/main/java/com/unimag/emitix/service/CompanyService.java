@@ -3,9 +3,11 @@ package com.unimag.emitix.service;
 import com.unimag.emitix.dto.CompanyRequest;
 import com.unimag.emitix.dto.CompanyResponse;
 import com.unimag.emitix.entity.Company;
+import com.unimag.emitix.entity.User;
 import com.unimag.emitix.exception.ResourceNotFoundException;
 import com.unimag.emitix.mapper.CompanyMapper;
 import com.unimag.emitix.repository.CompanyRepository;
+import com.unimag.emitix.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,24 +18,32 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CompanyService {
 
-    private final CompanyRepository CompanyRepository;
-    private final CompanyMapper CompanyMapper;
+    private final CompanyRepository companyRepository;
+    private final UserRepository userRepository;
+    private final CompanyMapper companyMapper;
 
     @Transactional(readOnly = true)
-    public CompanyResponse getCompany() {
-        Company company = CompanyRepository.findFirstByOrderByCreatedAtAsc()
-                .orElseThrow(() -> new ResourceNotFoundException("Empresa emisora", "registro", "único"));
-        return CompanyMapper.toResponse(company);
+    public CompanyResponse getCompanyForUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", "username", username));
+        Company company = user.getCompany();
+        if (company == null) {
+            throw new ResourceNotFoundException("Empresa emisora", "usuario", username);
+        }
+        return companyMapper.toResponse(company);
     }
 
     @Transactional
-    public CompanyResponse updateCompany(CompanyRequest request) {
-        Company company = CompanyRepository.findFirstByOrderByCreatedAtAsc()
-                .orElseThrow(() -> new ResourceNotFoundException("Empresa emisora", "registro", "único"));
-
-        CompanyMapper.updateFromRequest(request, company);
-        Company saved = CompanyRepository.save(company);
-        log.info("Company issuer updated: {}", saved.getDocumentNumber());
-        return CompanyMapper.toResponse(saved);
+    public CompanyResponse updateCompany(CompanyRequest request, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario", "username", username));
+        Company company = user.getCompany();
+        if (company == null) {
+            throw new ResourceNotFoundException("Empresa emisora", "usuario", username);
+        }
+        companyMapper.updateFromRequest(request, company);
+        Company saved = companyRepository.save(company);
+        log.info("Company updated: {} by user {}", saved.getDocumentNumber(), username);
+        return companyMapper.toResponse(saved);
     }
 }

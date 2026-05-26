@@ -24,6 +24,7 @@ public class PasswordResetService {
     private final PasswordResetTokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     /**
      * Genera y almacena un OTP de 6 dígitos para el email dado.
@@ -51,8 +52,7 @@ public class PasswordResetService {
 
         tokenRepository.save(token);
 
-        // En producción aquí se enviaría el email. Por ahora lo logueamos.
-        log.info("OTP generado para '{}': {} (válido {} min)", email, otp, OTP_EXPIRY_MINUTES);
+        emailService.sendOtpEmail(email, otp, OTP_EXPIRY_MINUTES);
     }
 
     /**
