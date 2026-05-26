@@ -2,7 +2,7 @@
 INSERT INTO users (id, username, password, email, full_name, phone, role, is_active)
 VALUES (gen_random_uuid(),
         'ADMIN',
-        '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+        '$2a$10$SZpIM72KKPDicniboe363.Tsol29nWToF7nbmyLN6HnFrlLBdQQZ6',
         'admin@emitix.com',
         'Administrador del Sistema',
         '+57 300 000 0000',
@@ -13,7 +13,7 @@ VALUES (gen_random_uuid(),
 INSERT INTO users (id, username, password, email, full_name, phone, role, is_active)
 VALUES (gen_random_uuid(),
         'ACCOUNTANT',
-        '$2a$10$8K1p/a0dR1xqM8eeXLO1W.g8N2dU5mhHMWuHLV6a8O39EZGRqDhLe',
+        '$2a$10$BC7AY.TKNse8KEEKZzjVRewlIh0/fVNc7U3C52DPyw5Q3DcH5rYAO',
         'operador@emitix.com',
         'Operador de Facturación',
         '+57 300 111 1111',

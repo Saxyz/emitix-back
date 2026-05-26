@@ -31,6 +31,7 @@ public class AuthService {
     private final CompanyRepository companyRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password())
@@ -53,6 +54,7 @@ public class AuthService {
         log.info("Token invalidated successfully (logout)");
     }
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public MeResponse me(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + username));
