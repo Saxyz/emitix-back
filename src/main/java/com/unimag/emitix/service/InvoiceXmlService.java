@@ -41,7 +41,7 @@ public class InvoiceXmlService {
 
         // Buyer
         xml.append("  <Buyer>\n");
-        xml.append("    <DocumentType>").append(esc(invoice.getBuyer().getDocumentType())).append("</DocumentType>\n");
+        xml.append("    <DocumentType>").append(esc(invoice.getBuyer().getDocumentType().name())).append("</DocumentType>\n");
         xml.append("    <DocumentNumber>").append(esc(invoice.getBuyer().getDocumentNumber())).append("</DocumentNumber>\n");
         xml.append("    <Name>").append(esc(invoice.getBuyer().getFullName())).append("</Name>\n");
         xml.append("    <Email>").append(esc(invoice.getBuyer().getEmail())).append("</Email>\n");

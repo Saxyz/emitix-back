@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Configuración local con credenciales (nunca subir a Git) ###
+src/main/resources/application-local.yaml
+src/main/resources/application-local.properties

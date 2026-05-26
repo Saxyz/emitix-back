@@ -43,7 +43,7 @@
 --
 --   CHECK constraint sobre VARCHAR: para valores que pueden evolucionar
 --     con cambios regulatorios o de negocio (DIAN agrega tipos,
---     se agrega un método de pago nuevo, etc.). Modificarlos es trivial:
+--     se agrega un metodo de pago nuevo, etc.). Modificarlos es trivial
 --     DROP CONSTRAINT + ADD CONSTRAINT.
 --     → document_type, organization_type, actor_type, result,
 --       payment_method, fiscal_regime, entity
@@ -252,7 +252,7 @@ CREATE TABLE invoices (
     total            DECIMAL(18,2)  NOT NULL DEFAULT 0,
 
     -- Pago
-    payment_method   VARCHAR(20),               -- método de pago (CASH | TRANSFER | CARD | CREDIT)
+    payment_method   VARCHAR(20),               -- metodo de pago (CASH | TRANSFER | CARD | CREDIT)
     due_date         DATE,                      -- fecha vencimiento si crédito
 
     -- DIAN / técnico
@@ -321,7 +321,7 @@ CREATE INDEX idx_invoice_items_product ON invoice_items(product_id);
 -- =========================
 -- LOG DE ACTIVIDAD (AUDITORÍA)
 -- =========================
--- entity y entity_id NOT NULL: todo log debe referenciar una entidad
+-- entity y entity_id NOT NULL: todos los logs deben referenciar una entidad
 -- concreta (refuerza integridad y utilidad del índice).
 -- entity_id es VARCHAR(36) y no UUID intencionalmente: permite registrar
 -- referencias a entidades externas o futuras que no usen UUID.

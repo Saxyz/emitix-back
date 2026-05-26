@@ -5,8 +5,9 @@ import com.unimag.emitix.dto.CompanyResponse;
 import com.unimag.emitix.entity.Company;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CompanyMapper {
 
     CompanyResponse toResponse(Company company);

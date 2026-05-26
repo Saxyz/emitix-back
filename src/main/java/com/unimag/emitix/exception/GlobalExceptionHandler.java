@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleBusinessException(
             BusinessException ex, HttpServletRequest request) {
         log.warn("Business rule violation: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+        return ResponseEntity.status(422)
                 .body(ApiErrorResponse.of(422, "Unprocessable Entity", ex.getMessage(), request.getRequestURI()));
     }
 
