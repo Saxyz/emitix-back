@@ -17,8 +17,8 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, UUID> 
 
     // entity es un enum → comparación exacta; username/action siguen con LIKE
     @Query("SELECT a FROM ActivityLog a WHERE " +
-           "(:username IS NULL OR LOWER(a.username) LIKE LOWER(CONCAT('%', :username, '%'))) AND " +
-           "(:action IS NULL OR LOWER(a.action) LIKE LOWER(CONCAT('%', :action, '%'))) AND " +
+           "(:username IS NULL OR LOWER(a.username) LIKE CAST(:username AS string)) AND " +
+           "(:action IS NULL OR LOWER(a.action) LIKE CAST(:action AS string)) AND " +
            "(:entity IS NULL OR a.entity = :entity) AND " +
            "(:from IS NULL OR a.createdAt >= :from) AND " +
            "(:to IS NULL OR a.createdAt <= :to) " +

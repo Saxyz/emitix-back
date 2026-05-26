@@ -32,8 +32,9 @@ public class BuyerService {
 
     @Transactional(readOnly = true)
     public PageResponse<BuyerResponse> findAll(UUID companyId, String search, Pageable pageable) {
+        String searchParam = (search != null && !search.isBlank()) ? "%" + search.toLowerCase() + "%" : null;
         return PageResponse.of(
-                buyerRepository.findByCompanyAndSearch(companyId, search, pageable)
+                buyerRepository.findByCompanyAndSearch(companyId, searchParam, pageable)
                         .map(buyerMapper::toResponse)
         );
     }

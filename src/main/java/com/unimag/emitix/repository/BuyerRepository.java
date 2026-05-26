@@ -22,8 +22,8 @@ public interface BuyerRepository extends JpaRepository<Buyer, UUID> {
 
     // Búsqueda paginada por número de documento o nombre dentro de una empresa
     @Query("SELECT b FROM Buyer b WHERE b.company.id = :companyId AND " +
-           "(:search IS NULL OR LOWER(b.documentNumber) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "OR LOWER(b.fullName) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(b.documentNumber) LIKE CAST(:search AS string) " +
+           "OR LOWER(b.fullName) LIKE CAST(:search AS string))")
     Page<Buyer> findByCompanyAndSearch(
             @Param("companyId") UUID companyId,
             @Param("search") String search,

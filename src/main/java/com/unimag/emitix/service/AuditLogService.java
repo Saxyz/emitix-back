@@ -87,9 +87,12 @@ public class AuditLogService {
             }
         }
 
+        String usernameParam = (username != null && !username.isBlank()) ? "%" + username.toLowerCase() + "%" : null;
+        String actionParam = (action != null && !action.isBlank()) ? "%" + action.toLowerCase() + "%" : null;
+
         return PageResponse.of(
                 activityLogRepository
-                        .findByFilters(username, action, entityType, from, to, pageable)
+                        .findByFilters(usernameParam, actionParam, entityType, from, to, pageable)
                         .map(this::toResponse)
         );
     }

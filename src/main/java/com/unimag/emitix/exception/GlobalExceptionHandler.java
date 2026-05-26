@@ -69,6 +69,15 @@ public class GlobalExceptionHandler {
                 .body(ApiErrorResponse.of(403, "Forbidden", "No tiene permisos para realizar esta acción", request.getRequestURI()));
     }
 
+    @ExceptionHandler(org.springframework.dao.DataAccessException.class)
+    public ResponseEntity<ApiErrorResponse> handleDataAccessException(
+            org.springframework.dao.DataAccessException ex, HttpServletRequest request) {
+        log.error("Database access error at {}: {}", request.getRequestURI(), ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiErrorResponse.of(500, "Database Error",
+                        "Error de persistencia o consulta en la base de datos.", request.getRequestURI()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleGenericException(
             Exception ex, HttpServletRequest request) {

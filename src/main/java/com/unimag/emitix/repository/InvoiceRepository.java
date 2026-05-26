@@ -23,8 +23,8 @@ public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
 
     @Query("SELECT i FROM Invoice i WHERE " +
            "(:status IS NULL OR i.status = :status) AND " +
-           "(:buyerName IS NULL OR LOWER(i.buyer.fullName) LIKE LOWER(CONCAT('%', :buyerName, '%'))) AND " +
-           "(:invoiceNumber IS NULL OR i.number LIKE CONCAT('%', :invoiceNumber, '%') OR CONCAT(i.prefix, i.number) LIKE CONCAT('%', :invoiceNumber, '%'))")
+           "(:buyerName IS NULL OR LOWER(i.buyer.fullName) LIKE CAST(:buyerName AS string)) AND " +
+           "(:invoiceNumber IS NULL OR i.number LIKE CAST(:invoiceNumber AS string) OR CONCAT(i.prefix, i.number) LIKE CAST(:invoiceNumber AS string))")
     Page<Invoice> findByFilters(
             @Param("status") InvoiceStatus status,
             @Param("buyerName") String buyerName,

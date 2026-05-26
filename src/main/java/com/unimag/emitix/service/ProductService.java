@@ -28,8 +28,9 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public PageResponse<ProductResponse> findAll(UUID companyId, String search, Pageable pageable) {
+        String searchParam = (search != null && !search.isBlank()) ? "%" + search.toLowerCase() + "%" : null;
         return PageResponse.of(
-                productRepository.findActiveByCompanyAndSearch(companyId, search, pageable)
+                productRepository.findActiveByCompanyAndSearch(companyId, searchParam, pageable)
                         .map(this::toResponse)
         );
     }

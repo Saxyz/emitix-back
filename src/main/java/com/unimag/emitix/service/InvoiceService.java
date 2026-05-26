@@ -41,7 +41,9 @@ public class InvoiceService {
     @Transactional(readOnly = true)
     public PageResponse<InvoiceResponse> findAll(InvoiceStatus status, String buyerName,
                                                  String invoiceNumber, Pageable pageable) {
-        Page<Invoice> page = invoiceRepository.findByFilters(status, buyerName, invoiceNumber, pageable);
+        String buyerNameParam = (buyerName != null && !buyerName.isBlank()) ? "%" + buyerName.toLowerCase() + "%" : null;
+        String invoiceNumberParam = (invoiceNumber != null && !invoiceNumber.isBlank()) ? "%" + invoiceNumber + "%" : null;
+        Page<Invoice> page = invoiceRepository.findByFilters(status, buyerNameParam, invoiceNumberParam, pageable);
         return PageResponse.of(page.map(invoiceMapper::toResponse));
     }
 

@@ -16,9 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     // Buscar productos activos de una empresa por descripción o código
     @Query("SELECT p FROM Product p WHERE p.company.id = :companyId AND p.isActive = true AND " +
-           "(:search IS NULL OR LOWER(p.description) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "OR LOWER(p.internalCode) LIKE LOWER(CONCAT('%', :search, '%')) " +
-           "OR LOWER(p.unspscCode) LIKE LOWER(CONCAT('%', :search, '%')))")
+           "(:search IS NULL OR LOWER(p.description) LIKE CAST(:search AS string) " +
+           "OR LOWER(p.internalCode) LIKE CAST(:search AS string) " +
+           "OR LOWER(p.unspscCode) LIKE CAST(:search AS string))")
     Page<Product> findActiveByCompanyAndSearch(
             @Param("companyId") UUID companyId,
             @Param("search") String search,
