@@ -44,10 +44,10 @@ public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
     BigDecimal sumTaxBetween(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 
     @Query("SELECT i FROM Invoice i WHERE " +
-           "(:from IS NULL OR i.issuedAt >= :from) AND " +
-           "(:to IS NULL OR i.issuedAt <= :to) AND " +
-           "(:status IS NULL OR i.status = :status) AND " +
-           "(:invoiceType IS NULL OR i.invoiceType = :invoiceType)")
+           "(CAST(:from AS LocalDateTime) IS NULL OR i.issuedAt >= :from) AND " +
+           "(CAST(:to AS LocalDateTime) IS NULL OR i.issuedAt <= :to) AND " +
+           "(CAST(:status AS string) IS NULL OR i.status = :status) AND " +
+           "(CAST(:invoiceType AS string) IS NULL OR i.invoiceType = :invoiceType)")
     Page<Invoice> findByReportFilters(
             @Param("from") LocalDateTime from,
             @Param("to") LocalDateTime to,
