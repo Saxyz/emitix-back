@@ -18,8 +18,14 @@ public class Company extends BaseEntity {
     @Column(name = "legal_name", nullable = false, length = 255)
     private String legalName;
 
-    @Column(name = "nit", nullable = false, unique = true, length = 20)
-    private String nit;
+    @Column(name = "document_number", nullable = false, unique = true, length = 20)
+    private String documentNumber;
+
+    @Column(name = "organization_type", length = 10)
+    private String organizationType;
+
+    @Column(name = "document_type", length = 10)
+    private String documentType;
 
     @Column(name = "address", length = 255)
     private String address;

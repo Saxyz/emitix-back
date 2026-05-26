@@ -33,7 +33,7 @@ public class CompanyService {
 
         CompanyMapper.updateFromRequest(request, company);
         Company saved = CompanyRepository.save(company);
-        log.info("Company issuer updated: {}", saved.getNit());
+        log.info("Company issuer updated: {}", saved.getDocumentNumber());
         return CompanyMapper.toResponse(saved);
     }
 }

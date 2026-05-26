@@ -34,7 +34,7 @@ class CompanyServiceTest {
     @BeforeEach
     void setUp() {
         company = Company.builder()
-                .nit("900123456-7")
+                .documentNumber("900123456-7")
                 .legalName("Demo S.A.S")
                 .address("Calle 1 # 2-3")
                 .city("Bogotá")
@@ -47,7 +47,7 @@ class CompanyServiceTest {
     @Test
     void getCompany_found_returnsResponse() {
         CompanyResponse response = new CompanyResponse(
-                company.getId(), company.getNit(), company.getLegalName(),
+                company.getId(), company.getDocumentNumber(), company.getLegalName(),
                 null, null, null, "CO", null, null, null);
 
         when(CompanyRepository.findFirstByOrderByCreatedAtAsc()).thenReturn(Optional.of(company));
@@ -56,7 +56,7 @@ class CompanyServiceTest {
         CompanyResponse result = companyService.getCompany();
 
         assertNotNull(result);
-        assertEquals("900123456-7", result.nit());
+        assertEquals("900123456-7", result.documentNumber());
         verify(CompanyRepository).findFirstByOrderByCreatedAtAsc();
     }
 
@@ -71,7 +71,7 @@ class CompanyServiceTest {
 
     @Test
     void updateCompany_successful() {
-        CompanyRequest req = new CompanyRequest("900123456-7", "Demo Actualizada S.A.S",
+        CompanyRequest req = new CompanyRequest("900123456-7", "Demo Actualizada S.A.S",  // documentNumber
                 "Carrera 10 # 5-20", "Medellín", "Antioquia", "CO",
                 "+57 604 111 2222", "info@demo.com", null);
 
@@ -93,7 +93,7 @@ class CompanyServiceTest {
 
     @Test
     void updateCompany_notFound_throwsResourceNotFoundException() {
-        CompanyRequest req = new CompanyRequest("000", "X", null, null,
+        CompanyRequest req = new CompanyRequest("000", "X", null, null,  // documentNumber
                 null, null, null, null, null);
         when(CompanyRepository.findFirstByOrderByCreatedAtAsc()).thenReturn(Optional.empty());
 

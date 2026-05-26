@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public record CompanyResponse(
         UUID id,
-        String nit,
+        String documentNumber,
         String legalName,
         String address,
         String city,

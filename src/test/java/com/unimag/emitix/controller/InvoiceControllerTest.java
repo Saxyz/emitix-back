@@ -87,7 +87,7 @@ class InvoiceControllerTest {
 
         // 2. Save Company
         Company company = Company.builder()
-                .nit("900.123.456-7")
+                .documentNumber("900.123.456-7")
                 .legalName("Emitix S.A.S")
                 .address("Calle 1 # 2 - 3")
                 .build();

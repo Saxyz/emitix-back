@@ -22,11 +22,17 @@ public record RegisterRequest(
 
         String phone,
 
-        @NotBlank(message = "El NIT de la empresa es requerido")
+        @NotBlank(message = "El número de documento de la empresa es requerido")
         @Size(max = 20)
-        String companyNit,
+        String companyDocumentNumber,
 
         @NotBlank(message = "El nombre legal de la empresa es requerido")
         @Size(max = 255)
-        String companyLegalName
+        String companyLegalName,
+
+        @Size(max = 10)
+        String organizationType,
+
+        @Size(max = 10)
+        String documentType
 ) {}

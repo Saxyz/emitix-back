@@ -85,7 +85,7 @@ public class InvoicePdfService {
         Font valueFont = new Font(Font.HELVETICA, 9, Font.NORMAL, Color.DARK_GRAY);
         companyCell.addElement(new Phrase("EMISOR", labelFont));
         companyCell.addElement(new Phrase(invoice.getCompany().getLegalName(), new Font(Font.HELVETICA, 10, Font.BOLD)));
-        companyCell.addElement(new Phrase("NIT: " + invoice.getCompany().getNit(), valueFont));
+        companyCell.addElement(new Phrase("Doc: " + invoice.getCompany().getDocumentNumber(), valueFont));
         if (invoice.getCompany().getAddress() != null)
             companyCell.addElement(new Phrase(invoice.getCompany().getAddress(), valueFont));
 

@@ -80,8 +80,10 @@ public class AuthService {
 
         // Crear empresa y ADMIN en una sola transacción (onboarding multi-tenant)
         Company company = Company.builder()
-                .nit(request.companyNit())
+                .documentNumber(request.companyDocumentNumber())
                 .legalName(request.companyLegalName())
+                .organizationType(request.organizationType())
+                .documentType(request.documentType())
                 .build();
         company = companyRepository.save(company);
 
@@ -97,7 +99,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-        log.info("User '{}' registered successfully with company '{}'", user.getUsername(), company.getNit());
+        log.info("User '{}' registered successfully with company '{}'", user.getUsername(), company.getDocumentNumber());
 
         String token = jwtTokenProvider.generateToken(user);
         return new LoginResponse(token, user.getUsername(), user.getFullName(), user.getRole().name(), company.getId());

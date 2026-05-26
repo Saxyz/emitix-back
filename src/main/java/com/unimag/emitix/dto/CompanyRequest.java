@@ -3,9 +3,9 @@ package com.unimag.emitix.dto;
 import jakarta.validation.constraints.*;
 
 public record CompanyRequest(
-        @NotBlank(message = "El NIT es requerido")
-        @Size(max = 20, message = "El NIT no puede superar 20 caracteres")
-        String nit,
+        @NotBlank(message = "El número de documento es requerido")
+        @Size(max = 20, message = "El número de documento no puede superar 20 caracteres")
+        String documentNumber,
 
         @NotBlank(message = "El nombre legal de la empresa es requerido")
         @Size(max = 255, message = "El nombre no puede superar 255 caracteres")

@@ -47,7 +47,7 @@ class UserServiceTest {
         companyId = UUID.randomUUID();
         userId    = UUID.randomUUID();
 
-        company = Company.builder().nit("900123456-7").legalName("Demo S.A.S").build();
+        company = Company.builder().documentNumber("900123456-7").legalName("Demo S.A.S").build();
         company.setId(companyId);
 
         user = User.builder()

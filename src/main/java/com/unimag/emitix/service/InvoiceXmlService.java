@@ -34,7 +34,7 @@ public class InvoiceXmlService {
 
         // Supplier
         xml.append("  <Supplier>\n");
-        xml.append("    <NIT>").append(esc(invoice.getCompany().getNit())).append("</NIT>\n");
+        xml.append("    <DocumentNumber>").append(esc(invoice.getCompany().getDocumentNumber())).append("</DocumentNumber>\n");
         xml.append("    <Name>").append(esc(invoice.getCompany().getLegalName())).append("</Name>\n");
         xml.append("    <Address>").append(esc(invoice.getCompany().getAddress())).append("</Address>\n");
         xml.append("  </Supplier>\n");
